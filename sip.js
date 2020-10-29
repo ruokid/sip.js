@@ -476,6 +476,15 @@ function makeStreamParser(onMessage, onFlood, maxBytesHeaders, maxContentLength)
 
         }
 
+        if (m.raw) {
+          m.raw = Buffer.concat([m.raw, data]); //stream.setEncoding('binary');
+          var b1 = Buffer.concat();
+          b1.subarray()
+        }
+        else {
+          m.raw = data;
+        }
+
         state = content;
         content('');
       }
@@ -489,7 +498,7 @@ function makeStreamParser(onMessage, onFlood, maxBytesHeaders, maxContentLength)
 
     if(r.length >= m.headers['content-length']) {
       m.content = r.substring(0, m.headers['content-length']);
-      
+      m.raw = m.raw.subarray(0, m.headers['content-length']);
       onMessage(m);
       
       var s = r.substring(m.headers['content-length']);
@@ -519,7 +528,7 @@ function parseMessage(s) {
       else {
         m.content = r[2];
       }
-      
+      m.raw = s;
       return m;
     }
   }
