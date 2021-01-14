@@ -478,8 +478,6 @@ function makeStreamParser(onMessage, onFlood, maxBytesHeaders, maxContentLength)
 
         if (m.raw) {
           m.raw = Buffer.concat([m.raw, data]); //stream.setEncoding('binary');
-          var b1 = Buffer.concat();
-          b1.subarray()
         }
         else {
           m.raw = data;
